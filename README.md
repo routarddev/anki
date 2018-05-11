@@ -41,10 +41,4 @@ How is dietary cholesterol transported to target tissues?|In chylomicrons
 What is the glucose transporter in the brain and what are its properties?|GLUT-1 transports glucose across blood-brain barrier, GLUT-3 transports glucose into neurons.  Both are high-affinity.
 ```
 
-You are invited to share your result sending at dev[AT]weekendesk.fr.
-
-IMPORTANT NOTES: 
-- do not forget Java is an OOP language
-- we prefer code quality and tests over performance !
-- we prefer code quality and tests over awesome features ! 
 
