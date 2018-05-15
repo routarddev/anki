@@ -39,6 +39,7 @@ public final class InteractionController {
             ArrayList<Card> redBox = (ArrayList<Card>) game.getRedBox().clone();
 
             //Read the cards of the red box and ask the corresponding questions.
+            int cardsShowed = 0;
             for(Card card: redBox) {
                 printDeck(game);
                 System.out.println(String.format(Constants.QUESTION, card.getCardId(), card.getQuestion()));
@@ -55,7 +56,8 @@ public final class InteractionController {
                     System.out.println(Constants.WRONG_ANSWER);
                 }
 
-                if (game.getRedBox().size() > 0) {
+                cardsShowed++;
+                if (cardsShowed < redBox.size()) {
                     System.out.println(Constants.NEXT_STEP);
                     input = scanner.nextLine();
                     if (input.equalsIgnoreCase("Q")) break;
@@ -65,20 +67,23 @@ public final class InteractionController {
 
         if (game.isEndOfGame()) {
             cleanGameStatus();
+            System.out.println(Constants.RED_BOX_EMPTY);
             System.out.println(String.format(Constants.CONGRATULATIONS, studentName));
-        } else { //User quited the game
+        } else { //User quited the game or viewed all the questions in the red box
             SaveRecoverGame saveGame = new SaveRecoverGame(Constants.FILE_PATH + Constants.GAME_STATUS_FILE);
             try {
-                /* If there are still cards in the red box, ask the user if he will be back to study
+                /* If there are still cards in the red box, ask the user whether he will be back to study
                     or prefers to finish the session. If there are no cards in the red box, but the game
-                    has not ended yet cause there are still cards in the orange box, finish the session.
+                    has not ended yet because there are still cards in the orange box, finish the session.
                 */
                 if (game.getRedBox().size() > 0) {
+                    System.out.println(Constants.RED_BOX_NOT_EMPTY);
                     System.out.println(Constants.FINISH_STUDY_SESSION);
                     input = scanner.nextLine();
                     if (input.equalsIgnoreCase("Y")) game.endSession();
                     else System.out.println(Constants.SEE_YOU_LATER);
                 } else {
+                    System.out.println(Constants.RED_BOX_EMPTY);
                     game.endSession();
                 }
                 saveGame.writeObject(game);

@@ -26,6 +26,8 @@ public final class Constants {
     public static final String PARTIAL_ANSWER = "That's partially correct, you should review the subject.\n";
     public static final String WRONG_ANSWER = "That's not correct, review again the subject.\n";
     public static final String NEXT_STEP = "Quit (Q) or Next question (N)? (Q/N)";
+    public static final String RED_BOX_EMPTY = "Congratulations, the red box is empty.";
+    public static final String RED_BOX_NOT_EMPTY = "There are still cards to study in the red box";
     public static final String FINISH_STUDY_SESSION = "Do you want to finish the study for today? (y/n)";
     public static final String SEE_YOU_LATER = "See you later!";
     public static final String SAVE_GAME = "\nAnki studying status has been successfully saved.";
