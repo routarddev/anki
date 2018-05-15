@@ -1,6 +1,6 @@
 package com.anki;
 
-import com.anki.controller.InteractionHelper;
+import com.anki.controller.InteractionController;
 import com.anki.model.Card;
 import com.anki.model.Game;
 import com.anki.processors.CardsReader;
@@ -12,66 +12,57 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ * Main program for playing Anki
  * @author routarddev
  */
 public final class AnkiGame {
 
     public static void main(String[] args) {
 
-        InteractionHelper interactionHelper = new InteractionHelper();
+        InteractionController interactionController = new InteractionController();
 
-        //TEST
-        args = new String[2];
-        args[0]=Constants.CARD_FILE_PATH;
-        //TEST
-
-        if (args.length < 1) {
-            interactionHelper.help();
-            System.exit(0);
-        }
-
-        /*
         //Read arguments
-        if (args.length > 0 && !args[0].isEmpty()) {
-            inputFileFullPath = args[0];
-            File inputFile = new File(inputFileFullPath);
-            if (!inputFile.exists()) {
-                inputFileFullPath = Constants.INPUT_FILE;
-            }
+        //If no file has been provided, use the default one
+        String cardsFileName = null;
+        if (args.length > 0) {
+            cardsFileName = args[0];
+            File inputFile = new File(cardsFileName);
+            if (!inputFile.exists()) cardsFileName = Constants.CARD_FILE_PATH;
+        } else {
+            cardsFileName = Constants.CARD_FILE_PATH;
         }
-        */
 
         Game game = new Game();
 
-        //if serialization file !exists then start new game:
+        //If serialization file doesn't exist, then start new game:
         File gameStatus = new File(Constants.FILE_PATH+Constants.GAME_STATUS_FILE);
         if (!gameStatus.exists()) {
-            CardsReader cardsReader = new CardsReader(args[0]);
+            CardsReader cardsReader = new CardsReader(cardsFileName);
             ArrayList<Card> deckOfCards = new ArrayList<Card>();
             try {
                 cardsReader.readDeckFromFile(deckOfCards);
             } catch (IOException ex) {
-                System.out.println("error message");
+                System.out.println(String.format(Constants.IO_EXCEPTION_MSG, ex.getMessage()));
                 System.exit(-1);
             }
             game.init();
             game.setRedBox(deckOfCards);
 
-            //else, deserialize and follow game
         } else {
+            //Deserialize and follow the game
             SaveRecoverGame recoverGame = new SaveRecoverGame();
             try {
-                recoverGame.readObject(game);
+                game = recoverGame.readObject();
             } catch(IOException ex) {
-                System.out.println("error message");
-                System.exit(0);
+                System.out.println(String.format(Constants.IO_EXCEPTION_MSG, ex.getMessage()));
+                System.exit(-1);
             } catch(ClassNotFoundException ex) {
-                System.out.println("error message");
-                System.exit(0);
+                System.out.println(String.format(Constants.CLASS_EXCEPTION_MSG, ex.getMessage()));
+                System.exit(-2);
             }
         }
 
-        interactionHelper.play(game);
+        interactionController.play(game);
     }
 
 }

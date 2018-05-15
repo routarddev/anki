@@ -1,5 +1,6 @@
 package com.anki.processors;
 
+import com.anki.model.Game;
 import com.anki.utils.Constants;
 
 import java.io.*;
@@ -26,29 +27,26 @@ public class SaveRecoverGame {
 
         out.close();
         file.close();
-
-        System.out.println("Object has been serialized");
     }
 
     /**
      * Deserialization process for the Anki Game status
-     * @param object Game
      * @throws IOException
      * @throws ClassNotFoundException
+     * @return object Game
      */
-    public void readObject(Object object) throws IOException, ClassNotFoundException {
+    public Game readObject() throws IOException, ClassNotFoundException {
         // Reading the object from the serialized file
         FileInputStream file = new FileInputStream(filename);
         ObjectInputStream in = new ObjectInputStream(file);
 
         // Method for deserialization of object
-        object = in.readObject();
+        Game object = (Game) in.readObject();
 
         in.close();
         file.close();
 
-        System.out.println("Object has been deserialized ");
-        System.out.println("object = " + object.toString());
+        return object;
     }
 
 }

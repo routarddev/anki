@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * Created by hadrien on 14/05/18.
+ * @author routarddev
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
