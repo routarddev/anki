@@ -33,9 +33,9 @@ public final class AnkiGame {
         }
 
         Game game = new Game();
-
+        String serializationFile = Constants.FILE_PATH + Constants.GAME_STATUS_FILE;
         //If serialization file doesn't exist, then start new game:
-        File gameStatus = new File(Constants.FILE_PATH+Constants.GAME_STATUS_FILE);
+        File gameStatus = new File(serializationFile);
         if (!gameStatus.exists()) {
             CardsReader cardsReader = new CardsReader(cardsFileName);
             ArrayList<Card> deckOfCards = new ArrayList<Card>();
@@ -50,7 +50,7 @@ public final class AnkiGame {
 
         } else {
             //Deserialize and follow the game
-            SaveRecoverGame recoverGame = new SaveRecoverGame();
+            SaveRecoverGame recoverGame = new SaveRecoverGame(serializationFile);
             try {
                 game = recoverGame.readObject();
             } catch(IOException ex) {

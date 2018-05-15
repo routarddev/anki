@@ -37,6 +37,8 @@ public final class InteractionController {
 
         if (!game.getRedBox().isEmpty()) {
             ArrayList<Card> redBox = (ArrayList<Card>) game.getRedBox().clone();
+
+            //Read the cards of the red box and ask the corresponding questions.
             for(Card card: redBox) {
                 printDeck(game);
                 System.out.println(String.format(Constants.QUESTION, card.getCardId(), card.getQuestion()));
@@ -60,15 +62,25 @@ public final class InteractionController {
                 }
             }
         }
-        scanner.close();
 
         if (game.isEndOfGame()) {
             cleanGameStatus();
             System.out.println(String.format(Constants.CONGRATULATIONS, studentName));
         } else { //User quited the game
-            SaveRecoverGame saveGame = new SaveRecoverGame();
+            SaveRecoverGame saveGame = new SaveRecoverGame(Constants.FILE_PATH + Constants.GAME_STATUS_FILE);
             try {
-                game.endSession();
+                /* If there are still cards in the red box, ask the user if he will be back to study
+                    or prefers to finish the session. If there are no cards in the red box, but the game
+                    has not ended yet cause there are still cards in the orange box, finish the session.
+                */
+                if (game.getRedBox().size() > 0) {
+                    System.out.println(Constants.FINISH_STUDY_SESSION);
+                    input = scanner.nextLine();
+                    if (input.equalsIgnoreCase("Y")) game.endSession();
+                    else System.out.println(Constants.SEE_YOU_LATER);
+                } else {
+                    game.endSession();
+                }
                 saveGame.writeObject(game);
                 System.out.println(Constants.SAVE_GAME);
             } catch(IOException ex) {
@@ -76,6 +88,7 @@ public final class InteractionController {
                 System.exit(0);
             }
         }
+        scanner.close();
         System.out.println(String.format(Constants.END_MSG, studentName));
     }
 
@@ -83,7 +96,7 @@ public final class InteractionController {
      * Prompts the cards of each box in the current game.
      * @param game current game status
      */
-    public void printDeck(Game game) {
+    private void printDeck(Game game) {
         System.out.println("\n" + Constants.HEADER_LINES);
         System.out.println(Constants.HEADER);
         System.out.println(Constants.HEADER_LINES);
@@ -99,7 +112,7 @@ public final class InteractionController {
      * @param list box of cards
      * @return line string with the card ID's
      */
-    public String mountCardLine(ArrayList<Card> list) {
+    private String mountCardLine(ArrayList<Card> list) {
         String line = "   ";
         if (list.isEmpty()) line += " - ";
         for(Card card: list) {
@@ -113,7 +126,7 @@ public final class InteractionController {
      * Prompts a message when some parameters are missing
      *  in the program call.
      */
-    public void help() {
+    private void help() {
         System.out.println(Constants.HELP);
     }
 
@@ -122,7 +135,7 @@ public final class InteractionController {
      * @return boolean true if file has been successfully deleted,
      *  false otherwise.
      */
-    public boolean cleanGameStatus() {
+    private boolean cleanGameStatus() {
         File file = new File(Constants.GAME_FILE_PATH);
         if (file.exists())
             return file.delete();

@@ -20,15 +20,19 @@ public final class Constants {
             "If you know a part of the answer of the Card, it will be placed in the orange box.\n" +
             "If you know the answer of the Card, it will be placed in the green box.\n\n" +
             "When all the card has been seen, the session is over.\n";
+
     public static final String QUESTION = "Card %d: %s";
     public static final String CORRECT = "That's correct, congratulations!\n";
     public static final String PARTIAL_ANSWER = "That's partially correct, you should review the subject.\n";
     public static final String WRONG_ANSWER = "That's not correct, review again the subject.\n";
     public static final String NEXT_STEP = "Quit (Q) or Next question (N)? (Q/N)";
+    public static final String FINISH_STUDY_SESSION = "Do you want to finish the study for today? (y/n)";
+    public static final String SEE_YOU_LATER = "See you later!";
     public static final String SAVE_GAME = "\nAnki studying status has been successfully saved.";
 
     public static final String HEADER_LINES =   "-------------------------------------------------";
     public static final String HEADER =         "|   RED BOX   |   ORANGE BOX    |   GREEN BOX   |";
+
 
     //Error messages
     public static final String HELP =   "Filename argument was missing.\n" +
@@ -40,6 +44,7 @@ public final class Constants {
 
     public static final String CLASS_EXCEPTION_MSG =    "Class Not Found Error: %s\n\n" +
                                                         "Contact the developer. Sorry for the inconvenience.";
+
 
     //Logic constants
     public static final String FILE_PATH = "resources/";

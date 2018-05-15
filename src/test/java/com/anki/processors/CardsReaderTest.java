@@ -4,12 +4,13 @@ import com.anki.model.Card;
 import com.anki.utils.Constants;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * @author routarddev.
@@ -21,15 +22,18 @@ public class CardsReaderTest {
 
     @Test
     public void readDeckFromFileTest() {
+        File file = new File(Constants.CARD_FILE_PATH);
+        int numberOfCards = getNumberOfCards(file);
+        if (numberOfCards == 0) numberOfCards = NUMBER_OF_CARDS;
+
         ArrayList<Card> deckOfCards = new ArrayList<Card>();
         cardsReader = new CardsReader(Constants.CARD_FILE_PATH);
-        //Files.lines(Paths.get(new File("D:/tmp/nourit.txt").getPath())).count();
         try {
             cardsReader.readDeckFromFile(deckOfCards);
         } catch(IOException ex) {
         }
         assertNotNull(deckOfCards);
-        assertEquals(NUMBER_OF_CARDS, deckOfCards.size());
+        assertEquals(numberOfCards, deckOfCards.size());
     }
 
 
@@ -38,6 +42,21 @@ public class CardsReaderTest {
         ArrayList<Card> deckOfCards = new ArrayList<Card>();
         cardsReader = new CardsReader(Constants.CARDS_FILE);
         cardsReader.readDeckFromFile(deckOfCards);
+    }
+
+    private int getNumberOfCards(File file) {
+        if (file.exists()) {
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                byte[] byteArray = new byte[(int) file.length()];
+                fis.read(byteArray);
+                String data = new String(byteArray);
+                String[] stringArray = data.split("\n");
+                return stringArray.length - 1;
+            } catch(Exception ex) {
+            }
+        }
+        return 0;
     }
 
 }

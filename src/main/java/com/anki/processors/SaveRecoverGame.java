@@ -1,16 +1,17 @@
 package com.anki.processors;
 
 import com.anki.model.Game;
-import com.anki.utils.Constants;
+import lombok.AllArgsConstructor;
 
 import java.io.*;
 
 /**
  * @author routarddev
  */
+@AllArgsConstructor
 public class SaveRecoverGame {
 
-    private static final String filename = Constants.FILE_PATH + Constants.GAME_STATUS_FILE;
+    private String filename;
 
     /**
      * Serialization process for the Anki Game status

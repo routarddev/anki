@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
+ * Suite for all tests
  * @author routarddev
  */
 @RunWith(Suite.class)

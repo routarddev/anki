@@ -37,6 +37,11 @@ public class Game implements Serializable {
         return redBox.isEmpty() && orangeBox.isEmpty();
     }
 
+    /**
+     * The user has finished the study for today.
+     * Move the cards to the corresponding boxes
+     * for the next study session.
+     */
     public void endSession() {
         redBox.addAll(orangeBox);
         orangeBox.clear();
