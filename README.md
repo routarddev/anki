@@ -1,6 +1,6 @@
 # Anki
 
-## Problem to solve:
+### Problem to solve:
 
 Anki is a spaced repetition flashcard program. Anki (暗記) is the Japanese word for memorization.
 
@@ -43,6 +43,7 @@ How is dietary cholesterol transported to target tissues?|In chylomicrons
 What is the glucose transporter in the brain and what are its properties?|GLUT-1 transports glucose across blood-brain barrier, GLUT-3 transports glucose into neurons.  Both are high-affinity.
 ```
 
+
 ## Design:
 ### Classes:
 - **Card**: class that represents the card object, composed by: a cardId, which will be automatically assigned when reading from the cards file; the card question and the card answer.
@@ -67,5 +68,5 @@ Maven is used to build the project: https://maven.apache.org/
 
 - Program execution:
   1. Run the main program AnkiGame from the Run options of your IDE.
-	2. Or navigate to the created jar inside the target folder and execute the following command:
+  2. Or navigate to the created jar inside the target folder and execute the following command:
   ```java -cp anki-1.0-SNAPSHOT.jar com.anki.AnkiGame ../resources/cards.txt```
