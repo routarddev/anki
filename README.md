@@ -60,7 +60,7 @@ What is the glucose transporter in the brain and what are its properties?|GLUT-1
 - Taking into account the provided example input file input, which is reproduced in the cards.txt file, a header `card question|card answer` is expected, that will be omitted when reading, and each line containing the pair "card question|card answer" as is, using the vertical bar "|" as separator.
 - The file cards.txt (or the provided file) containing the questions and answer of the deck of cards will only be read once, at the beginning of the program. After that, the information will be recovered from the serialization file.
 - The option of quitting the game is offered, after which the program asks the student whether he/she will study again the same day, so the same session is saved, or the day session is over, so a cards movement will be performed from box to box.
-- Regarding tho the student answer treatment, to simplify the game logic (no AI or ML included), it will be as follows:
+- Regarding to the student answer treatment, to simplify the game logic (no AI or ML included), it will be as follows:
 	- an answer is marked as correct (sent to the green box) if it is exactly as the expected answer, ignoring case considerations;
 	- an answer is marked as partially correct (sent to the orange box) if the expected answer contains some words/characters of the answer provided by the student, ignoring case considerations;
 	- an answer is marked as incorrect (kept in the red box) is none of the previous cases happen.
