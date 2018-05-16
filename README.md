@@ -1,5 +1,7 @@
 # Anki
 
+## Problem to solve:
+
 Anki is a spaced repetition flashcard program. Anki (暗記) is the Japanese word for memorization.
 
 A student is proposed a **Deck** of cards, one face of the **card** contains a **question**, the other face the **answer**.
@@ -41,4 +43,29 @@ How is dietary cholesterol transported to target tissues?|In chylomicrons
 What is the glucose transporter in the brain and what are its properties?|GLUT-1 transports glucose across blood-brain barrier, GLUT-3 transports glucose into neurons.  Both are high-affinity.
 ```
 
+## Design:
+### Classes:
+- **Card**: class that represents the card object, composed by: a cardId, which will be automatically assigned when reading from the cards file; the card question and the card answer.
+- **Game**: class that represents the game status, composed by the three card boxes (ArrayList, in this case): red, orange and green.
+- **Constants**: class containing literals used for the user interacion, messages, etc.
+- **CardsReader**: helper class to read from the incoming/default cards file with answers and questions and process it into a general ArrayList with the full deck of cards.
+- **SaveRecoverGame**: helper class used to serialize and deserialize a file containing the current status of the game, that is, to save the game status (Game and Card objects, which are serializable) into a file called ```anki.dat```, contained in the resources folder.
+- **InteractionController**: class containing the main logic of the game and the user interaction, prompting messages and information and reading from the console.
+- **AnkiGame**: main program to execute and run the game. A filename argument is expected so if it is found (should be stored in the resources folder), the cards are read from there, otherwise, we use the default file cards.txt and start the logic to play.
 
+### Assumptions:
+- A valid and existing path/name file for the cards is expected to be provided, if not, the
+	default cards.txt file from the resources folder will be used.
+- Taking into account the provided example input file input, which is reproduced in the cards.txt file, a header `card question|card answer` is expected, that will be omitted when reading, and each line containing the pair "card question|card answer" as is, using the vertical bar "|" as separator.
+- The file cards.txt (or the provided file) containing the questions and answer of the deck of cards will only be read once, at the beginning of the program. After that, the information will be recovered from the serialization file.
+- The option of quitting the game is offered, after which the program ask the student whether he/she will study again the same day, so the same session is saved, or the day session is over, so a cards movement will be performed from box to box.
+
+### Execution:
+Maven is used to build the project: https://maven.apache.org/
+- Project build, inside the root of the project folder, where the pom.xml is: 
+		```mvn clean install``` --> builds project and executes the tests
+
+- Program execution:
+  1. Run the main program AnkiGame from the Run options of your IDE.
+	2. Or navigate to the created jar inside the target folder and execute the following command:
+  ```java -cp anki-1.0-SNAPSHOT.jar com.anki.AnkiGame ../resources/cards.txt```
